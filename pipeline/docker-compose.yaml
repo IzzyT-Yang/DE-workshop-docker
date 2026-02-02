@@ -20,7 +20,18 @@ services:
     ports:
       - "8085:80"
 
-
+  ingest:
+    build: .
+    image: taxi_ingest:v001
+    depends_on:
+      - pgdatabase
+    command:
+      - --pg-user=root
+      - --pg-pass=root
+      - --pg-host=pgdatabase
+      - --pg-port=5432
+      - --pg-db=ny_taxi
+      - --target-table=yellow_taxi_trips
 
 volumes:
   ny_taxi_postgres_data:
